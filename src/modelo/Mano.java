@@ -23,44 +23,33 @@ public class Mano extends Mazo {
 			valor=valor-10;
 			numAses--; 
 		}
-		
+		return valor;
+	}
 		// Version del método que lanza la excepción Masde21Exception
 		 
-		public boolean finDeJuego() throws Masde21Exception {
-			try {
+		public boolean finDeJuego() {
 				if (valorMano()>=21) {
 					return true;
 				}
-			} catch (Masde21Exception e) {
-				return true;
-			}
 			return false;
 		}
-	
-		
 
 	@Override
 	public String toString() {
 		return "Mano [" + cartas + "]  Valor de la mano:"+valorMano();
 	}
 	
+	public void pedirCarta(Mazo baraja) throws NoHayMasCartasException, Masde21Exception, HayBlackjackException {
+		// Recoge la carta que se encuentra en el principio del Mazo
+		Carta c = baraja.solicitarCarta();
+		this.cartas.add(c);
+		if (valorMano()>21) {
+			throw new Masde21Exception();
+		}
+		if (valorMano()==21) {
+			throw new HayBlackjackException();
+		}
+	}
 	
 }
 
-/*
- * // Versión del método que recoge la excepción para que no se propague
-	// y se devuelvw true en caso de pasarnos de 21 puntos
-	public boolean finDeJuego() {
-		try {
-			if (valorMano()>=21) {
-				return true;
-			}
-		} catch (Masde21Exception e) {
-			return true;
-		}
-		return false;
-	}
-			return valor;
-	}
-* 
-*/
